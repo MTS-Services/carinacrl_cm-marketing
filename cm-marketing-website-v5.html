@@ -209,6 +209,7 @@
     .form-row { grid-template-columns: 1fr; }
     .hero-stats { gap: 2rem; }
     section { padding: 5rem 6vw; }
+    #hero { padding-bottom: 8rem; }
   }
 
   /* COMPARISON TABLE */
@@ -733,8 +734,9 @@
   <div style="position:relative;z-index:1;width:100%;max-width:860px;margin:0 auto;">
     <div class="hero-line"></div>
     <p class="hero-eyebrow">Medical &amp; Luxury Digital Marketing</p>
-    <h1 class="hero-title">Your patients are<br>choosing someone<br><em>else</em> right now.</h1>
-    <p class="hero-sub">We build and run the full marketing engine for elite medical practices — social media, paid ads, influencer strategy, and brand — completely done for you. Your feed should be booking consultations while you operate.</p>
+    <h1 class="hero-title">Your <em>social media</em> should book<br>consultations while<br>you operate.</h1>
+    <p class="hero-sub" style="font-family:var(--serif);font-size:clamp(0.95rem,1.5vw,1.15rem);font-style:italic;color:var(--text-mid);margin-bottom:1rem;">Your patients are choosing someone <em>else</em> right now.</p>
+    <p class="hero-sub">We build and run the full marketing engine for elite medical practices — social media, paid ads, influencer strategy, and brand — completely done for you.</p>
     <div class="hero-cta-group">
       <button onclick="openPopup()" class="btn-primary" style="cursor:pointer;border:none;">Get Your Free Audit →</button>
       <a href="#results" class="btn-ghost">See What's Possible</a>
@@ -996,6 +998,7 @@
     <button class="ptab active" onclick="switchTab('content',this)">Content</button>
     <button class="ptab" onclick="switchTab('beforeafter',this)">Before &amp; After</button>
     <button class="ptab" onclick="switchTab('casestudies',this)">Case Studies</button>
+    <button class="ptab" onclick="switchTab('aitrending',this)">AI &amp; Trending</button>
   </div>
 
   <!-- CONTENT TAB -->
@@ -1004,8 +1007,10 @@
 
       <div class="content-card">
         <div class="content-thumb">
-          <div class="thumb-icon"><svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.899L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg></div>
-          <div class="thumb-label">Add Reel thumbnail here</div>
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/quicktime">
+            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/webm">
+          </video>
         </div>
         <div class="content-card-body">
           <div class="content-card-type">Reel · Plastic Surgery</div>
@@ -1016,8 +1021,7 @@
 
       <div class="content-card">
         <div class="content-thumb">
-          <div class="thumb-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="thumb-label">Add before/after photo here</div>
+          <img src="/uploads/Dental%20Case.png" alt="Smile Design Before & After">
         </div>
         <div class="content-card-body">
           <div class="content-card-type">Before &amp; After · Cosmetic Dentistry</div>
@@ -1028,8 +1032,9 @@
 
       <div class="content-card">
         <div class="content-thumb">
-          <div class="thumb-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-          <div class="thumb-label">Add ad creative here</div>
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+            <source src="/uploads/Facelift.webm" type="video/webm">
+          </video>
         </div>
         <div class="content-card-body">
           <div class="content-card-type">Ad Creative · Meta</div>
@@ -1040,13 +1045,12 @@
 
       <div class="content-card">
         <div class="content-thumb">
-          <div class="thumb-icon"><svg viewBox="0 0 24 24"><path d="M21 2H3v16h5v4l4-4h5l4-4V2z"/></svg></div>
-          <div class="thumb-label">Add TikTok screenshot here</div>
+          <img src="/uploads/influencer_combined%20%281%29.jpg" alt="Rhinoplasty Reveal Collab - TikTok Influencer">
         </div>
         <div class="content-card-body">
-          <div class="content-card-type">TikTok · Wellness Brand</div>
-          <div class="content-card-title">Influencer Partnership</div>
-          <div class="content-card-desc">Curated creator campaign for wellness platform launch. 3 consults booked, $29.4K returned.</div>
+          <div class="content-card-type">TikTok · Medical Aesthetics</div>
+          <div class="content-card-title">Rhinoplasty Reveal Collab</div>
+          <div class="content-card-desc">Influencer collaboration for rhinoplasty reveal. 4.8M views on procedure content, 397.5K likes on patient reveal post.</div>
         </div>
       </div>
 
@@ -1054,8 +1058,7 @@
 
       <div class="content-card">
         <div class="content-thumb">
-          <div class="thumb-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-          <div class="thumb-label">Add brand content here</div>
+          <img src="/uploads/Brand_feed.jpg" alt="Practice Branding - Feed Design">
         </div>
         <div class="content-card-body">
           <div class="content-card-type">Brand Content · Med Spa</div>
@@ -1069,22 +1072,15 @@
 
   <!-- BEFORE & AFTER TAB -->
   <div class="portfolio-pane" id="pane-beforeafter">
-    <div style="max-width:600px;">
+    <div class="content-grid">
 
-      <div class="ba-card">
-        <div class="ba-images">
-          <div class="ba-img">
-            <div class="ba-placeholder"><span>Before</span></div>
-            <div class="ba-label-pill">Before</div>
-          </div>
-          <div class="ba-img">
-            <div class="ba-placeholder"><span>After</span></div>
-            <div class="ba-label-pill">After</div>
-          </div>
+      <div class="content-card">
+        <div style="overflow:hidden;">
+          <img src="/uploads/Dental%20Case.png" alt="Full Arch Reconstruction Before & After" style="width:100%;display:block;">
         </div>
         <div class="ba-card-body">
-          <div class="ba-card-client">Plastic Surgery · Reconstruction</div>
-          <div class="ba-card-title">Surgical Reconstruction Result</div>
+          <div class="ba-card-client">Cosmetic Dentistry · Full Arch</div>
+          <div class="ba-card-title">Full Arch Reconstruction</div>
           <div class="ba-stats">
             <div><div class="ba-stat-num">Before</div><div class="ba-stat-label">Pre-procedure</div></div>
             <div><div class="ba-stat-num">→</div><div class="ba-stat-label">&nbsp;</div></div>
@@ -1093,6 +1089,37 @@
         </div>
       </div>
 
+      <div class="content-card">
+        <div style="overflow:hidden;">
+          <img src="/uploads/Dental%20Case%202.png" alt="Dental Implant Before & After" style="width:100%;display:block;">
+        </div>
+        <div class="ba-card-body">
+          <div class="ba-card-client">Cosmetic Dentistry · Implant</div>
+          <div class="ba-card-title">Dental Implant &amp; Crown</div>
+          <div class="ba-stats">
+            <div><div class="ba-stat-num">Before</div><div class="ba-stat-label">Pre-procedure</div></div>
+            <div><div class="ba-stat-num">→</div><div class="ba-stat-label">&nbsp;</div></div>
+            <div><div class="ba-stat-num">After</div><div class="ba-stat-label">Post-procedure</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI & TRENDING TAB -->
+  <div class="portfolio-pane" id="pane-aitrending">
+    <div class="content-grid">
+      <div class="content-card" style="grid-column:1/-1;max-width:600px;">
+        <div class="content-thumb" style="aspect-ratio:unset;">
+          <img src="/uploads/Trending.jpg" alt="AI & Trending Content" style="width:100%;display:block;">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">AI &amp; Trending · Strategy</div>
+          <div class="content-card-title">Trending Content Overview</div>
+          <div class="content-card-desc">More AI &amp; trending content coming soon — Carina is prepping the full breakdown.</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1358,8 +1385,6 @@
         <a href="mailto:carina@cmstrategicmarketing.com">carina@cmstrategicmarketing.com</a>
         <span class="footer-dot">·</span>
         <a href="tel:4243949948">(424) 394-9948</a>
-        <span class="footer-dot">·</span>
-        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram ↗</a>
       </div>
     </div>
     <div class="footer-nav">
