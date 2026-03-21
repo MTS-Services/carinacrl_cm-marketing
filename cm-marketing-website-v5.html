@@ -503,7 +503,7 @@
   }
   .content-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(44,35,24,0.1); }
   .content-thumb {
-    width: 100%;
+    width: 100%; aspect-ratio: 3/4;
     background: var(--bg-3);
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
@@ -520,7 +520,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .content-thumb .thumb-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
-  .content-thumb img { width: 100%; height: auto; object-fit: contain; display: block; }
+  .content-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .content-card-body { padding: 1.2rem 1.4rem; }
   .content-card-type {
     font-size: 0.54rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1078,8 +1078,8 @@
     <div class="content-grid">
 
       <div class="content-card">
-        <div style="overflow:hidden;">
-          <img src="/uploads/Dental%20Case.png" alt="Full Arch Reconstruction Before & After" style="width:100%;display:block;">
+        <div style="overflow:hidden;aspect-ratio:1;">
+          <img src="/uploads/Dental%20Case.png" alt="Full Arch Reconstruction Before & After" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
         <div class="ba-card-body">
           <div class="ba-card-client">Cosmetic Dentistry · Full Arch</div>
@@ -1093,8 +1093,8 @@
       </div>
 
       <div class="content-card">
-        <div style="overflow:hidden;">
-          <img src="/uploads/Dental%20Case%202.png" alt="Dental Implant Before & After" style="width:100%;display:block;">
+        <div style="overflow:hidden;aspect-ratio:1;">
+          <img src="/uploads/Dental%20Case%202.png" alt="Dental Implant Before & After" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
         <div class="ba-card-body">
           <div class="ba-card-client">Cosmetic Dentistry · Implant</div>
