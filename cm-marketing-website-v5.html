@@ -372,11 +372,32 @@
     text-transform: uppercase; padding: 0.85rem 1.6rem;
     border: none; cursor: pointer;
     box-shadow: 0 4px 24px rgba(154,122,80,0.35);
-    transition: all 0.3s; opacity: 0; transform: translateY(20px);
-    animation: floatIn 0.6s 2s ease forwards;
+    transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease,
+                width 0.35s ease, border-radius 0.35s ease, padding 0.35s ease, font-size 0.35s ease;
+    opacity: 0; transform: translateY(20px); pointer-events: none;
+    display: flex; align-items: center; justify-content: center; white-space: nowrap; overflow: hidden;
   }
+  .floating-cta.visible {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .fab-icon { display: none; font-size: 1.1rem; line-height: 1; }
+  .fab-text { display: block; }
   .floating-cta:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(154,122,80,0.45); }
-  @keyframes floatIn { to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 768px) {
+    .floating-cta {
+      width: 50px; height: 50px; border-radius: 50%;
+      padding: 0; bottom: 1.5rem; right: 1.5rem;
+    }
+    .fab-icon { display: flex; }
+    .fab-text { display: none; }
+    .floating-cta.expanded {
+      width: auto; height: auto; border-radius: 0;
+      padding: 0.85rem 1.5rem;
+    }
+    .floating-cta.expanded .fab-icon { display: none; }
+    .floating-cta.expanded .fab-text { display: block; }
+    .floating-cta:hover { transform: none; box-shadow: 0 4px 24px rgba(154,122,80,0.35); }
+  }
 
   /* POPUP OVERLAY */
   .popup-overlay {
@@ -422,6 +443,18 @@
   .popup-submit:hover { background: var(--accent-light); }
   .popup-note { font-size: 0.58rem; color: var(--text-muted); text-align: center; letter-spacing: 0.05em; }
   .popup-rule { width: 30px; height: 0.5px; background: var(--accent-pale); margin-bottom: 1.4rem; }
+  @media (max-width: 600px) {
+    .popup-overlay { align-items: flex-end; }
+    .popup-box {
+      width: 100vw; max-width: 100%; padding: 2rem 1.4rem 2.4rem;
+      border-left: none; border-right: none; border-bottom: none;
+      max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      border-radius: 16px 16px 0 0;
+    }
+    .popup-overlay.active .popup-box { transform: translateY(0); }
+    .popup-title { font-size: 1.45rem; }
+    .popup-sub { margin-bottom: 1.2rem; }
+  }
 
   /* THANK YOU MODAL */
   .thankyou-overlay {
@@ -468,9 +501,19 @@
     padding: 0.9rem 2rem; border: none; cursor: pointer; transition: all 0.3s;
   }
   .thankyou-btn:hover { background: var(--accent-light); }
+  @media (max-width: 600px) {
+    .thankyou-overlay { align-items: flex-end; }
+    .thankyou-box {
+      width: 100vw; max-width: 100%; padding: 2rem 1.4rem 2.4rem;
+      border-left: none; border-right: none; border-bottom: none;
+      border-radius: 16px 16px 0 0;
+    }
+    .thankyou-overlay.active .thankyou-box { transform: translateY(0); }
+    .thankyou-title { font-size: 1.35rem; }
+  }
 
   /* ── PORTFOLIO ── */
-  #portfolio { background: var(--bg-1); }
+  #portfolio { background: var(--bg-2); }
 
   .portfolio-tabs {
     display: flex; gap: 0; margin-bottom: 3rem;
@@ -695,6 +738,83 @@
     .footer-nav { flex-direction: column; gap: 1.5rem; }
     .footer-bottom { flex-direction: column; }
   }
+
+  /* VIRAL / STATS CARD */
+  .vcard-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .vcard-img {
+    position: relative;
+    overflow: hidden;
+  }
+  .vcard-img + .vcard-img { border-left: 0.5px solid var(--border); }
+  .vcard-img img, .vcard-img video {
+    width: 100%; height: auto; display: block;
+    object-fit: cover;
+  }
+  .vcard-badge {
+    position: absolute; top: 0.6rem; left: 0.6rem;
+    background: rgba(44,35,24,0.62);
+    color: #faf7f2;
+    font-size: 0.52rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.22rem 0.55rem;
+  }
+  .vcard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 0.5px solid var(--border);
+    margin: 1rem 0 0.85rem;
+  }
+  .vcard-stat {
+    text-align: center;
+    padding: 0.7rem 0.4rem;
+    border-right: 0.5px solid var(--border);
+  }
+  .vcard-stat:last-child { border-right: none; }
+  .vcard-stat-num {
+    font-family: var(--serif);
+    font-size: 1.15rem; font-weight: 400;
+    color: var(--accent); line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .vcard-stat-label {
+    font-size: 0.52rem; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .vcard-reach {
+    border-top: 0.5px solid var(--border);
+    padding-top: 0.85rem; margin-top: 0.85rem;
+  }
+  .vcard-reach-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 0.45rem;
+  }
+  .vcard-reach-label {
+    font-size: 0.56rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .vcard-reach-pct {
+    font-family: var(--serif);
+    font-size: 1rem; color: var(--text-dark);
+  }
+  .vcard-bar-track {
+    height: 2px; background: var(--border);
+  }
+  .vcard-bar-fill {
+    height: 100%; background: var(--accent-pale);
+  }
+  .vcard-reach-note {
+    font-size: 0.56rem; color: var(--text-muted);
+    font-style: italic; margin-top: 0.4rem;
+  }
+  @media (max-width: 600px) {
+    .vcard-stats { grid-template-columns: repeat(2, 1fr); }
+    .vcard-stat:nth-child(2) { border-right: none; }
+  }
 </style>
 </head>
 <body>
@@ -814,6 +934,453 @@
     <div class="svc-card"><div class="svc-arrow">↗</div><div class="svc-num">06</div><h3 class="svc-title">Wellness Product Marketing</h3><p class="svc-desc">Launch and scale wellness products and platforms with campaigns that balance aspiration and clinical credibility — reaching the right audience at the right moment.</p><div class="svc-tags"><span class="tag">Product Launch</span><span class="tag">E-commerce</span><span class="tag">Platform Growth</span></div></div>
   </div>
 </section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="reveal">
+    <div class="rule"></div>
+    <p class="eyebrow">Our Work</p>
+    <h2 class="sec-title">Built for <em>Elite Practices</em></h2>
+    <p class="sec-body" style="margin-bottom:2.5rem;">A visual industry demands visual proof. Below is a sample of the content we create, the transformations we deliver, and the numbers behind the work.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="portfolio-tabs reveal" style="transition-delay:0.1s;">
+    <button class="ptab active" onclick="switchTab('content',this)">Content</button>
+    <button class="ptab" onclick="switchTab('beforeafter',this)">Before &amp; After</button>
+    <button class="ptab" onclick="switchTab('casestudies',this)">Case Studies</button>
+    <button class="ptab" onclick="switchTab('aitrending',this)">AI &amp; Trending</button>
+  </div>
+
+  <!-- CONTENT TAB -->
+  <div class="portfolio-pane active reveal" id="pane-content" style="transition-delay:0.2s;">
+    <div class="content-grid">
+
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/quicktime">
+            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Rhinoplasty Transformation</div>
+          <div class="content-card-desc">Before/after Reel with trending audio. 2.4M views, 98% non-follower reach.</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Dental%20Case.png" alt="Smile Design Before & After">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Cosmetic Dentistry · Full Arch</div>
+          <div class="content-card-title">Full Arch Reconstruction</div>
+          <div class="content-card-desc">Close-up before and after showing full arch restoration — consistent framing and lighting to highlight the complete smile transformation from missing tooth to seamless result.</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/Facelift.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Ad Creative · Meta</div>
+          <div class="content-card-title">Facelift Campaign</div>
+          <div class="content-card-desc">Meta ad campaign targeting women 40–65 in LA. $19.46/message, 12.3x ROAS.</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/influencer_combined%20%281%29.jpg" alt="Rhinoplasty Reveal Collab - TikTok Influencer">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">TikTok · Medical Aesthetics</div>
+          <div class="content-card-title">Rhinoplasty Reveal Collab</div>
+          <div class="content-card-desc">Influencer collaboration for rhinoplasty reveal. 4.8M views on procedure content, 397.5K likes on patient reveal post.</div>
+        </div>
+      </div>
+
+
+
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Brand_feed.jpg" alt="Practice Branding - Feed Design">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Brand Content · Med Spa</div>
+          <div class="content-card-title">Practice Branding Shoot</div>
+          <div class="content-card-desc">Full brand identity, feed design, and launch content for medical aesthetics practice.</div>
+        </div>
+      </div>
+
+      <!-- 6. Viral Reel — Two-Col Stats Card -->
+      <div class="content-card">
+        <div class="vcard-images">
+          <div class="vcard-img">
+            <img src="/uploads/ViralReel.jpg" alt="15.4M Views Rhinoplasty Reel"
+              onerror="this.onerror=null;this.src='/uploads/Viral.png';"
+              style="width:100%;height:auto;display:block;">
+            <span class="vcard-badge">Viral Reel</span>
+          </div>
+          <div class="vcard-img">
+            <img src="/uploads/ReelInsights.png" alt="Reel Insights"
+              onerror="this.onerror=null;this.src='/uploads/ReelInsights.png';">
+            <span class="vcard-badge">Reel Insights</span>
+          </div>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Organic Content · Plastic Surgery · Rhinoplasty</div>
+          <div class="content-card-title">15.4M Views — One Reel</div>
+          <div class="content-card-desc">Organic Reel using a trending celebrity reference and music to showcase rhinoplasty impact. Zero ad spend — pure content strategy.</div>
+          <div class="vcard-stats">
+            <div class="vcard-stat">
+              <div class="vcard-stat-num">15.4M</div>
+              <div class="vcard-stat-label">Views</div>
+            </div>
+            <div class="vcard-stat">
+              <div class="vcard-stat-num">32K</div>
+              <div class="vcard-stat-label">Likes</div>
+            </div>
+            <div class="vcard-stat">
+              <div class="vcard-stat-num">44K</div>
+              <div class="vcard-stat-label">Shares</div>
+            </div>
+            <div class="vcard-stat">
+              <div class="vcard-stat-num">$0</div>
+              <div class="vcard-stat-label">Ad Spend</div>
+            </div>
+          </div>
+          <div class="vcard-reach">
+            <div class="vcard-reach-row">
+              <span class="vcard-reach-label">Non-Follower Reach</span>
+              <span class="vcard-reach-pct">99.7%</span>
+            </div>
+            <div class="vcard-bar-track"><div class="vcard-bar-fill" style="width:99.7%"></div></div>
+            <div class="vcard-reach-note">99.7% of views came from non-followers — zero ad spend</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BEFORE & AFTER TAB -->
+  <div class="portfolio-pane" id="pane-beforeafter">
+    <div class="content-grid">
+
+      <!-- Lower Blepharoplasty -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Alex%20Lower%20Bleph.jpg" alt="Lower Blepharoplasty Before & After" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Alex%20Lower%20Bleph.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Plastic Surgery</div>
+          <div class="content-card-title">Lower Blepharoplasty Result</div>
+          <div class="content-card-desc">Matched lighting, angle, and color grading across before and after — so the only thing that changed is the result. Clean, clinical photography that lets the surgery speak for itself.</div>
+        </div>
+      </div>
+
+      <!-- Facelift Before & After -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Facelift%20before%20and%20after.jpg" alt="Hybrid Lift + Browlift Before & After" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Facelift%20before%20and%20after.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Plastic Surgery</div>
+          <div class="content-card-title">Hybrid Lift + Browlift — 6 Month Result</div>
+          <div class="content-card-desc">Side-by-side angle shot with consistent framing and neutral background — edited to highlight facial lifting, brow repositioning, and overall rejuvenation at the 6 month mark. The result does the talking.</div>
+        </div>
+      </div>
+
+      <!-- Lip Filler -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Lip%20Filler.jpg" alt="Lip Filler Before & After" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Lip%20Filler.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Med Spa</div>
+          <div class="content-card-title">Lip Filler — Symmetry &amp; Volume</div>
+          <div class="content-card-desc">Annotated before and after showing asymmetry correction and natural volume addition — edited with callout lines to highlight exactly what changed and where. Clinical detail that builds patient trust.</div>
+        </div>
+      </div>
+
+      <!-- Rhinoplasty 1 -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Rhinoplasty.jpg" alt="Rhinoplasty Deviated Septum & Tip Before & After" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Rhinoplasty.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Plastic Surgery</div>
+          <div class="content-card-title">Rhinoplasty — Deviated Septum &amp; Tip Correction</div>
+          <div class="content-card-desc">Three-stage visual breakdown showing the twisted tip, annotated deviated septum, and final straightened result — edited with anatomical overlays to make the surgical complexity easy to understand for any patient.</div>
+        </div>
+      </div>
+
+      <!-- Rhinoplasty 2 -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Rhinoplasty2.jpg" alt="Rhinoplasty 4 Month Profile Before & After" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Rhinoplasty2.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Plastic Surgery</div>
+          <div class="content-card-title">Rhinoplasty — 4 Month Profile Result</div>
+          <div class="content-card-desc">Clean split-frame profile shot with matched angle, lighting, and background — showing dorsal refinement and tip work at 4 months. Consistent framing that puts the surgical result front and center.</div>
+        </div>
+      </div>
+
+      <!-- Upper Blepharoplasty Healing Journey -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Upper%20Bleph%20Healing%20Journey.jpg" alt="Upper Blepharoplasty Full Healing Journey" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="this.onerror=null;this.src='/uploads/Upper%20Bleph%20Healing%20Journey.png';">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Plastic Surgery</div>
+          <div class="content-card-title">Upper Blepharoplasty — Full Healing Journey</div>
+          <div class="content-card-desc">Nine-frame grid documenting the complete recovery from day of surgery through 11 days post-op — swelling, bruising, and the gradual reveal all captured and sequenced. Transparent content that builds patient trust before they ever book a consultation.</div>
+        </div>
+      </div>
+
+      <!-- Dental: Full Arch Reconstruction -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Dental%20Case.png" alt="Full Arch Reconstruction Before & After" style="width:100%;height:100%;object-fit:contain;display:block;">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Cosmetic Dentistry</div>
+          <div class="content-card-title">Full Arch Reconstruction</div>
+          <div class="content-card-desc">Close-up before and after showing full arch restoration — consistent framing and lighting to highlight the complete smile transformation from missing tooth to seamless result.</div>
+        </div>
+      </div>
+
+      <!-- Dental: Implant & Crown -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img src="/uploads/Dental%20Case%202.png" alt="Dental Implant & Crown Before & After" style="width:100%;height:100%;object-fit:contain;display:block;">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Before &amp; After · Cosmetic Dentistry</div>
+          <div class="content-card-title">Dental Implant &amp; Crown</div>
+          <div class="content-card-desc">Clinical before and after documenting implant placement and crown seating — shot from the same angle pre and post procedure to show the full structural and aesthetic change.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI & TRENDING TAB -->
+  <div class="portfolio-pane" id="pane-aitrending">
+    <div class="content-grid">
+
+      <!-- 1. AI Transition 2 -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/AI%20Transition%202.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">The Facelift Reveal, Reimagined</div>
+          <div class="content-card-desc">We used AI transitions to show this facelift transformation in a way static before/afters never could. Higher engagement, more emotional impact, more bookings.</div>
+        </div>
+      </div>
+
+      <!-- 2. AI Transition -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/AI%20Transition.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Take Off the Mask of Aging</div>
+          <div class="content-card-desc">AI-enhanced facelift reveal using a hand-wipe transition to uncover the result — concept and execution designed to stop the scroll. Creative storytelling that showcases real surgical outcomes.</div>
+        </div>
+      </div>
+
+      <!-- 3. Funny -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/Funny.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">All 4 Pens In — Book Your Consultation</div>
+          <div class="content-card-desc">Trending format meets medical marketing. A funny, relatable Reel that turned a viral challenge into a consultation call-to-action. Proof that the right hook drives real bookings.</div>
+        </div>
+      </div>
+
+      <!-- 4. HussainThisThat -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/HussainThisThat.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">This or That: Beauty Trends with a Surgeon</div>
+          <div class="content-card-desc">Fast-paced "this or that" Reel featuring a board-certified plastic surgeon breaking down today's biggest beauty trends — retinol vs. red light, collagen vs. protein, hyperbaric oxygen vs. lymphatic massage. Educational content that builds trust and keeps viewers coming back.</div>
+        </div>
+      </div>
+
+      <!-- 5. Profiles Q&A -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/ProfilesQNA.webm" type="video/webm">
+          
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Two Surgeons, One Question</div>
+          <div class="content-card-desc">Split-screen Reel featuring two board-certified plastic surgeons answering the same questions — separately. Most underrated combo procedure, lowest downtime pick, most requested surgery, top recovery tip, best beauty hack. Same specialty, same questions — do they agree?</div>
+        </div>
+      </div>
+
+      <!-- 6. profiles trending topic -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+          
+            <source src="/uploads/ProfilesTrendingTopic.webm" type="video/webm">
+
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Doctor Reacts: The Chin Filler Conversation</div>
+          <div class="content-card-desc">We greenscreened a viral trending moment and had a board-certified surgeon weigh in — turning internet buzz into expert commentary. Trend-jacking done right: relevant, credible, and timed perfectly.</div>
+        </div>
+      </div>
+
+      <!-- 7. Trending Reel -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/Trending%20Reel.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">"I Want a Surgeon With More Experience"</div>
+          <div class="content-card-desc">AI-generated Reel turning a common patient request into a viral joke — our surgeon pictured alongside Marilyn Monroe, Einstein, Cleopatra, and Napoleon. Trending format, original concept, maximum shareability.</div>
+        </div>
+      </div>
+
+      <!-- 8. Viral -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
+            <source src="/uploads/Viral.webm" type="video/webm">
+          </video>
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Proof That Your Nose Will Change Everything</div>
+          <div class="content-card-desc">Organic Reel using a trending celebrity reference and music to showcase rhinoplasty impact. 15.4M views, 32K likes, 44K shares — 99.7% non-follower reach. Zero ad spend.</div>
+        </div>
+      </div>
+
+      <!-- 9. Bad Bunny (already uploaded) -->
+      <div class="content-card">
+        <div class="content-thumb">
+          <img id="bad-bunny-img" src="/uploads/Trending.jpg" alt="Facelift but Make It Bad Bunny" style="width:100%;height:100%;object-fit:contain;display:block;"
+            onerror="(function(el){var t=['/uploads/BadBunny.jpg','/uploads/bad_bunny.jpg','/uploads/Bad%20Bunny.jpg','/uploads/badbunny.jpg'];var i=0;el.onerror=function(){if(i<t.length)el.src=t[i++];};if(i<t.length)el.src=t[i++];})(this)">
+        </div>
+        <div class="content-card-body">
+          <div class="content-card-type">Reel · Plastic Surgery</div>
+          <div class="content-card-title">Facelift but Make It Bad Bunny</div>
+          <div class="content-card-desc">Trend-jacked the Super Bowl halftime moment with a surgeon twist — custom captions on viral performance photos that made the medical world actually funny. Timely, shareable, and very online.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CASE STUDIES TAB -->
+  <div class="portfolio-pane" id="pane-casestudies">
+    <div class="case-grid">
+
+      <div class="case-card">
+        <div class="case-card-header">
+          <div class="case-card-spec">Plastic Surgery · 39 Months</div>
+          <div class="case-card-name">Practice A — Long-Term Growth</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-row"><span class="case-row-label">Total revenue generated</span><span class="case-row-val">$11.2M+</span></div>
+          <div class="case-row"><span class="case-row-label">Total ad spend</span><span class="case-row-val">$1.58M</span></div>
+          <div class="case-row"><span class="case-row-label">Net return</span><span class="case-row-val good">$9.6M+</span></div>
+          <div class="case-row"><span class="case-row-label">Average ROAS</span><span class="case-row-val">7.1x</span></div>
+          <div class="case-row"><span class="case-row-label">Best month revenue</span><span class="case-row-val">$509,500</span></div>
+          <div class="case-row"><span class="case-row-label">Best month ROAS</span><span class="case-row-val good">17.6x</span></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-header">
+          <div class="case-card-spec">Plastic Surgery · 9 Months</div>
+          <div class="case-card-name">Practice B — Rapid Scale</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-row"><span class="case-row-label">Total revenue attributed</span><span class="case-row-val">$662,090</span></div>
+          <div class="case-row"><span class="case-row-label">Total ad spend</span><span class="case-row-val">$89,974</span></div>
+          <div class="case-row"><span class="case-row-label">Net return</span><span class="case-row-val good">$572,116</span></div>
+          <div class="case-row"><span class="case-row-label">Average ROAS</span><span class="case-row-val">7.4x</span></div>
+          <div class="case-row"><span class="case-row-label">Best month ROAS</span><span class="case-row-val good">12.3x</span></div>
+          <div class="case-row"><span class="case-row-label">Revenue growth</span><span class="case-row-val">6.4x in 7 months</span></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-header">
+          <div class="case-card-spec">Instagram &amp; TikTok · All Clients</div>
+          <div class="case-card-name">Organic Growth — Combined</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-row"><span class="case-row-label">Followers built from zero</span><span class="case-row-val">1M+ combined</span></div>
+          <div class="case-row"><span class="case-row-label">Total views generated</span><span class="case-row-val">100M+</span></div>
+          <div class="case-row"><span class="case-row-label">Peak monthly views</span><span class="case-row-val">20.5M</span></div>
+          <div class="case-row"><span class="case-row-label">Accounts reached (30 days)</span><span class="case-row-val">13.6M</span></div>
+          <div class="case-row"><span class="case-row-label">Reach growth</span><span class="case-row-val good">+1,651%</span></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-card-header">
+          <div class="case-card-spec">Meta Ads · August 2024</div>
+          <div class="case-card-name">Ad Efficiency — Breakdown</div>
+        </div>
+        <div class="case-card-body">
+          <div class="case-row"><span class="case-row-label">Revision Rhinoplasty</span><span class="case-row-val">$17.47/message</span></div>
+          <div class="case-row"><span class="case-row-label">Facelift campaign</span><span class="case-row-val">$19.46/message</span></div>
+          <div class="case-row"><span class="case-row-label">Browlift campaign</span><span class="case-row-val">$19.43/message</span></div>
+          <div class="case-row"><span class="case-row-label">Fat transfer + Rhino</span><span class="case-row-val">$17.61/message</span></div>
+          <div class="case-row"><span class="case-row-label">Total consults booked</span><span class="case-row-val good">52 in one month</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
 
 <!-- SPECIALTIES -->
 <section id="specialties">
@@ -988,211 +1555,7 @@
 </section>
 
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="reveal">
-    <div class="rule"></div>
-    <p class="eyebrow">Our Work</p>
-    <h2 class="sec-title">Built for <em>Elite Practices</em></h2>
-    <p class="sec-body" style="margin-bottom:2.5rem;">A visual industry demands visual proof. Below is a sample of the content we create, the transformations we deliver, and the numbers behind the work.</p>
-  </div>
 
-  <!-- Tabs -->
-  <div class="portfolio-tabs reveal" style="transition-delay:0.1s;">
-    <button class="ptab active" onclick="switchTab('content',this)">Content</button>
-    <button class="ptab" onclick="switchTab('beforeafter',this)">Before &amp; After</button>
-    <button class="ptab" onclick="switchTab('casestudies',this)">Case Studies</button>
-    <button class="ptab" onclick="switchTab('aitrending',this)">AI &amp; Trending</button>
-  </div>
-
-  <!-- CONTENT TAB -->
-  <div class="portfolio-pane active reveal" id="pane-content" style="transition-delay:0.2s;">
-    <div class="content-grid">
-
-      <div class="content-card">
-        <div class="content-thumb">
-          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
-            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/quicktime">
-            <source src="/uploads/Rhinoplasty%20Transformation.webm" type="video/webm">
-          </video>
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">Reel · Plastic Surgery</div>
-          <div class="content-card-title">Rhinoplasty Transformation</div>
-          <div class="content-card-desc">Before/after Reel with trending audio. 2.4M views, 98% non-follower reach.</div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-thumb">
-          <img src="/uploads/Dental%20Case.png" alt="Smile Design Before & After">
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">Before &amp; After · Cosmetic Dentistry</div>
-          <div class="content-card-title">Smile Design Result</div>
-          <div class="content-card-desc">Before/after photo showing smile design transformation for a cosmetic dental client.</div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-thumb">
-          <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;">
-            <source src="/uploads/Facelift.webm" type="video/webm">
-          </video>
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">Ad Creative · Meta</div>
-          <div class="content-card-title">Facelift Campaign</div>
-          <div class="content-card-desc">Meta ad campaign targeting women 40–65 in LA. $19.46/message, 12.3x ROAS.</div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div class="content-thumb">
-          <img src="/uploads/influencer_combined%20%281%29.jpg" alt="Rhinoplasty Reveal Collab - TikTok Influencer">
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">TikTok · Medical Aesthetics</div>
-          <div class="content-card-title">Rhinoplasty Reveal Collab</div>
-          <div class="content-card-desc">Influencer collaboration for rhinoplasty reveal. 4.8M views on procedure content, 397.5K likes on patient reveal post.</div>
-        </div>
-      </div>
-
-
-
-      <div class="content-card">
-        <div class="content-thumb">
-          <img src="/uploads/Brand_feed.jpg" alt="Practice Branding - Feed Design">
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">Brand Content · Med Spa</div>
-          <div class="content-card-title">Practice Branding Shoot</div>
-          <div class="content-card-desc">Full brand identity, feed design, and launch content for medical aesthetics practice.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- BEFORE & AFTER TAB -->
-  <div class="portfolio-pane" id="pane-beforeafter">
-    <div class="content-grid">
-
-      <div class="content-card">
-        <div style="overflow:hidden;aspect-ratio:1;">
-          <img src="/uploads/Dental%20Case.png" alt="Full Arch Reconstruction Before & After" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="ba-card-body">
-          <div class="ba-card-client">Cosmetic Dentistry · Full Arch</div>
-          <div class="ba-card-title">Full Arch Reconstruction</div>
-          <div class="ba-stats">
-            <div><div class="ba-stat-num">Before</div><div class="ba-stat-label">Pre-procedure</div></div>
-            <div><div class="ba-stat-num">→</div><div class="ba-stat-label">&nbsp;</div></div>
-            <div><div class="ba-stat-num">After</div><div class="ba-stat-label">Post-procedure</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="content-card">
-        <div style="overflow:hidden;aspect-ratio:1;">
-          <img src="/uploads/Dental%20Case%202.png" alt="Dental Implant Before & After" style="width:100%;height:100%;object-fit:cover;display:block;">
-        </div>
-        <div class="ba-card-body">
-          <div class="ba-card-client">Cosmetic Dentistry · Implant</div>
-          <div class="ba-card-title">Dental Implant &amp; Crown</div>
-          <div class="ba-stats">
-            <div><div class="ba-stat-num">Before</div><div class="ba-stat-label">Pre-procedure</div></div>
-            <div><div class="ba-stat-num">→</div><div class="ba-stat-label">&nbsp;</div></div>
-            <div><div class="ba-stat-num">After</div><div class="ba-stat-label">Post-procedure</div></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- AI & TRENDING TAB -->
-  <div class="portfolio-pane" id="pane-aitrending">
-    <div class="content-grid">
-      <div class="content-card" style="grid-column:1/-1;max-width:600px;">
-        <div class="content-thumb" style="aspect-ratio:unset;">
-          <img src="/uploads/Trending.jpg" alt="AI & Trending Content" style="width:100%;display:block;">
-        </div>
-        <div class="content-card-body">
-          <div class="content-card-type">AI &amp; Trending · Strategy</div>
-          <div class="content-card-title">Trending Content Overview</div>
-          <div class="content-card-desc">More AI &amp; trending content coming soon — Carina is prepping the full breakdown.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CASE STUDIES TAB -->
-  <div class="portfolio-pane" id="pane-casestudies">
-    <div class="case-grid">
-
-      <div class="case-card">
-        <div class="case-card-header">
-          <div class="case-card-spec">Plastic Surgery · 39 Months</div>
-          <div class="case-card-name">Practice A — Long-Term Growth</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-row"><span class="case-row-label">Total revenue generated</span><span class="case-row-val">$11.2M+</span></div>
-          <div class="case-row"><span class="case-row-label">Total ad spend</span><span class="case-row-val">$1.58M</span></div>
-          <div class="case-row"><span class="case-row-label">Net return</span><span class="case-row-val good">$9.6M+</span></div>
-          <div class="case-row"><span class="case-row-label">Average ROAS</span><span class="case-row-val">7.1x</span></div>
-          <div class="case-row"><span class="case-row-label">Best month revenue</span><span class="case-row-val">$509,500</span></div>
-          <div class="case-row"><span class="case-row-label">Best month ROAS</span><span class="case-row-val good">17.6x</span></div>
-        </div>
-      </div>
-
-      <div class="case-card">
-        <div class="case-card-header">
-          <div class="case-card-spec">Plastic Surgery · 9 Months</div>
-          <div class="case-card-name">Practice B — Rapid Scale</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-row"><span class="case-row-label">Total revenue attributed</span><span class="case-row-val">$662,090</span></div>
-          <div class="case-row"><span class="case-row-label">Total ad spend</span><span class="case-row-val">$89,974</span></div>
-          <div class="case-row"><span class="case-row-label">Net return</span><span class="case-row-val good">$572,116</span></div>
-          <div class="case-row"><span class="case-row-label">Average ROAS</span><span class="case-row-val">7.4x</span></div>
-          <div class="case-row"><span class="case-row-label">Best month ROAS</span><span class="case-row-val good">12.3x</span></div>
-          <div class="case-row"><span class="case-row-label">Revenue growth</span><span class="case-row-val">6.4x in 7 months</span></div>
-        </div>
-      </div>
-
-      <div class="case-card">
-        <div class="case-card-header">
-          <div class="case-card-spec">Instagram &amp; TikTok · All Clients</div>
-          <div class="case-card-name">Organic Growth — Combined</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-row"><span class="case-row-label">Followers built from zero</span><span class="case-row-val">1M+ combined</span></div>
-          <div class="case-row"><span class="case-row-label">Total views generated</span><span class="case-row-val">100M+</span></div>
-          <div class="case-row"><span class="case-row-label">Peak monthly views</span><span class="case-row-val">20.5M</span></div>
-          <div class="case-row"><span class="case-row-label">Accounts reached (30 days)</span><span class="case-row-val">13.6M</span></div>
-          <div class="case-row"><span class="case-row-label">Reach growth</span><span class="case-row-val good">+1,651%</span></div>
-        </div>
-      </div>
-
-      <div class="case-card">
-        <div class="case-card-header">
-          <div class="case-card-spec">Meta Ads · August 2024</div>
-          <div class="case-card-name">Ad Efficiency — Breakdown</div>
-        </div>
-        <div class="case-card-body">
-          <div class="case-row"><span class="case-row-label">Revision Rhinoplasty</span><span class="case-row-val">$17.47/message</span></div>
-          <div class="case-row"><span class="case-row-label">Facelift campaign</span><span class="case-row-val">$19.46/message</span></div>
-          <div class="case-row"><span class="case-row-label">Browlift campaign</span><span class="case-row-val">$19.43/message</span></div>
-          <div class="case-row"><span class="case-row-label">Fat transfer + Rhino</span><span class="case-row-val">$17.61/message</span></div>
-          <div class="case-row"><span class="case-row-label">Total consults booked</span><span class="case-row-val good">52 in one month</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</section>
 
 <!-- COMPARISON -->
 <section id="comparison">
@@ -1347,7 +1710,10 @@
 
 
 <!-- FLOATING CTA -->
-<button class="floating-cta" onclick="openPopup()">Get Your Free Audit →</button>
+<button class="floating-cta" id="floatingCta" onclick="handleFloatingCta()">
+  <span class="fab-icon">✦</span>
+  <span class="fab-text">Get Your Free Audit →</span>
+</button>
 
 <!-- POPUP -->
 <div class="popup-overlay" id="popup" onclick="handleOverlayClick(event)">
@@ -1449,6 +1815,37 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   reveals.forEach(el => revObs.observe(el));
+
+  // FLOATING CTA — hide while hero is visible, show after scroll
+  const floatingCta = document.getElementById('floatingCta');
+  const heroSection = document.getElementById('hero');
+  const heroObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        floatingCta.classList.remove('visible');
+      } else {
+        floatingCta.classList.add('visible');
+        floatingCta.classList.remove('expanded');
+      }
+    });
+  }, { threshold: 0 });
+  if (heroSection) heroObs.observe(heroSection);
+
+  function handleFloatingCta() {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile && !floatingCta.classList.contains('expanded')) {
+      floatingCta.classList.add('expanded');
+      // auto-collapse after 4 seconds if not acted on
+      setTimeout(() => floatingCta.classList.remove('expanded'), 4000);
+    } else {
+      floatingCta.classList.remove('expanded');
+      openPopup();
+    }
+  }
+  // close expand when clicking elsewhere on mobile
+  document.addEventListener('click', e => {
+    if (!floatingCta.contains(e.target)) floatingCta.classList.remove('expanded');
+  });
 
   // POPUP
   function openPopup() {
