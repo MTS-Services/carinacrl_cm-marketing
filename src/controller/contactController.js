@@ -1,11 +1,50 @@
+const https = require('https');
+const querystring = require('querystring');
 const { sendConsultationEmail, sendStrategyCallEmail, sendUserConfirmationEmail } = require('../service/emailService');
+
+function verifyRecaptcha(token) {
+  return new Promise((resolve, reject) => {
+    const params = querystring.stringify({
+      secret: process.env.RECAPTCHA_SECRET_KEY,
+      response: token,
+    });
+    const options = {
+      hostname: 'www.google.com',
+      port: 443,
+      path: '/recaptcha/api/siteverify',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': Buffer.byteLength(params),
+      },
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try { resolve(JSON.parse(data)); } catch (e) { reject(e); }
+      });
+    });
+    req.on('error', reject);
+    req.write(params);
+    req.end();
+  });
+}
 
 /**
  * Handle main contact/consultation form (Image 1)
  */
 async function handleConsultation(req, res) {
   try {
-    const { firstName, lastName, email, practiceName, specialty, goals } = req.body;
+    const { firstName, lastName, email, practiceName, specialty, goals, recaptchaToken } = req.body;
+
+    if (!recaptchaToken) {
+      return res.status(400).json({ success: false, message: 'reCAPTCHA verification missing.' });
+    }
+    const captcha = await verifyRecaptcha(recaptchaToken);
+    if (!captcha.success) {
+      return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed. Please try again.' });
+    }
 
     if (!firstName || !lastName || !email || !practiceName || !specialty) {
       return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
@@ -28,7 +67,15 @@ async function handleConsultation(req, res) {
  */
 async function handleStrategyCall(req, res) {
   try {
-    const { name, practiceName, email, phone } = req.body;
+    const { name, practiceName, email, phone, recaptchaToken } = req.body;
+
+    if (!recaptchaToken) {
+      return res.status(400).json({ success: false, message: 'reCAPTCHA verification missing.' });
+    }
+    const captcha = await verifyRecaptcha(recaptchaToken);
+    if (!captcha.success) {
+      return res.status(400).json({ success: false, message: 'reCAPTCHA verification failed. Please try again.' });
+    }
 
     if (!name || !email) {
       return res.status(400).json({ success: false, message: 'Please provide your name and email.' });

@@ -856,6 +856,18 @@
     .vcard-stat:nth-child(2) { border-right: none; }
   }
 </style>
+<script>
+  var consultationWidgetId, strategyWidgetId;
+  function onRecaptchaLoad() {
+    consultationWidgetId = grecaptcha.render('cf-recaptcha', {
+      sitekey: '6LdPSNQsAAAAAFLioD_7sA_TJ2uFbyGk92zSvy4M'
+    });
+    strategyWidgetId = grecaptcha.render('sf-recaptcha', {
+      sitekey: '6LdPSNQsAAAAAFLioD_7sA_TJ2uFbyGk92zSvy4M'
+    });
+  }
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
 <body>
 
@@ -1756,6 +1768,7 @@
           <select class="form-select" id="cf-specialty" required><option value="" disabled selected>Select your specialty</option><option>Plastic Surgery</option><option>Cosmetic Dentistry</option><option>Wellness Brand / Platform</option><option>Medical Spa / Aesthetics</option><option>Other</option></select>
         </div>
         <div class="form-group"><label class="form-label">What Are You Looking to Achieve?</label><textarea class="form-textarea" id="cf-goals" placeholder="Tell us about your goals — more consultations, better brand presence, influencer campaigns, etc."></textarea></div>
+        <div id="cf-recaptcha" style="margin-bottom:1rem;"></div>
         <button type="submit" class="btn-primary" id="cf-submit" style="width:100%;padding:1.1rem;font-size:0.62rem;cursor:pointer;border:none;letter-spacing:0.2em;text-transform:uppercase;">Request My Free Strategy Call →</button>
         <p id="cf-message" style="font-size:0.58rem;color:var(--text-muted);text-align:center;margin-top:0.5rem;letter-spacing:0.06em;">No commitment. No pressure. Just strategy.</p>
       </form>
@@ -1791,6 +1804,7 @@
       <input type="text" class="popup-input" id="sf-practiceName" placeholder="Practice name" />
       <input type="email" class="popup-input" id="sf-email" placeholder="Email address" required />
       <input type="tel" class="popup-input" id="sf-phone" placeholder="Phone number" />
+      <div id="sf-recaptcha" style="margin-bottom:1rem;"></div>
       <button class="popup-submit" onclick="submitStrategyCall()" type="button" id="sf-submit">Request My Free Strategy Call →</button>
       <p class="popup-note" id="sf-message">No commitment. No pressure. Just strategy.</p>
     </div>
@@ -1994,6 +2008,15 @@
     msg.style.color = 'var(--text-muted)';
     msg.textContent = '';
 
+    const recaptchaToken = grecaptcha.getResponse(consultationWidgetId);
+    if (!recaptchaToken) {
+      msg.style.color = '#b07070';
+      msg.textContent = 'Please complete the reCAPTCHA verification.';
+      btn.disabled = false;
+      btn.textContent = 'Request My Free Strategy Call →';
+      return;
+    }
+
     const data = {
       firstName: document.getElementById('cf-firstName').value.trim(),
       lastName: document.getElementById('cf-lastName').value.trim(),
@@ -2001,6 +2024,7 @@
       practiceName: document.getElementById('cf-practiceName').value.trim(),
       specialty: document.getElementById('cf-specialty').value,
       goals: document.getElementById('cf-goals').value.trim(),
+      recaptchaToken,
     };
 
     try {
@@ -2014,6 +2038,7 @@
         msg.style.color = '#6a8c5f';
         msg.textContent = result.message;
         document.getElementById('consultationForm').reset();
+        grecaptcha.reset(consultationWidgetId);
         openThankYou();
       } else {
         msg.style.color = '#b07070';
@@ -2023,6 +2048,7 @@
       msg.style.color = '#b07070';
       msg.textContent = 'Network error. Please try again.';
     }
+    grecaptcha.reset(consultationWidgetId);
     btn.disabled = false;
     btn.textContent = 'Request My Free Strategy Call →';
   }
@@ -2035,11 +2061,21 @@
     msg.style.color = 'var(--text-muted)';
     msg.textContent = '';
 
+    const recaptchaToken = grecaptcha.getResponse(strategyWidgetId);
+    if (!recaptchaToken) {
+      msg.style.color = '#b07070';
+      msg.textContent = 'Please complete the reCAPTCHA verification.';
+      btn.disabled = false;
+      btn.textContent = 'Request My Free Strategy Call →';
+      return;
+    }
+
     const data = {
       name: document.getElementById('sf-name').value.trim(),
       practiceName: document.getElementById('sf-practiceName').value.trim(),
       email: document.getElementById('sf-email').value.trim(),
       phone: document.getElementById('sf-phone').value.trim(),
+      recaptchaToken,
     };
 
     if (!data.name || !data.email) {
@@ -2064,6 +2100,7 @@
         document.getElementById('sf-practiceName').value = '';
         document.getElementById('sf-email').value = '';
         document.getElementById('sf-phone').value = '';
+        grecaptcha.reset(strategyWidgetId);
         closePopup();
         openThankYou();
       } else {
@@ -2074,6 +2111,7 @@
       msg.style.color = '#b07070';
       msg.textContent = 'Network error. Please try again.';
     }
+    grecaptcha.reset(strategyWidgetId);
     btn.disabled = false;
     btn.textContent = 'Request My Free Strategy Call →';
   }
