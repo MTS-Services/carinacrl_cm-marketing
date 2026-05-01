@@ -2009,13 +2009,17 @@
     msg.textContent = '';
 
     const recaptchaToken = grecaptcha.getResponse(consultationWidgetId);
+    const cfRecaptchaBox = document.getElementById('cf-recaptcha');
     if (!recaptchaToken) {
       msg.style.color = '#b07070';
       msg.textContent = 'Please complete the reCAPTCHA verification.';
+      cfRecaptchaBox.style.outline = '2px solid #b07070';
+      cfRecaptchaBox.style.borderRadius = '4px';
       btn.disabled = false;
       btn.textContent = 'Request My Free Strategy Call →';
       return;
     }
+    cfRecaptchaBox.style.outline = '';
 
     const data = {
       firstName: document.getElementById('cf-firstName').value.trim(),
@@ -2039,6 +2043,7 @@
         msg.textContent = result.message;
         document.getElementById('consultationForm').reset();
         grecaptcha.reset(consultationWidgetId);
+        document.getElementById('cf-recaptcha').style.outline = '';
         openThankYou();
       } else {
         msg.style.color = '#b07070';
@@ -2062,13 +2067,17 @@
     msg.textContent = '';
 
     const recaptchaToken = grecaptcha.getResponse(strategyWidgetId);
+    const sfRecaptchaBox = document.getElementById('sf-recaptcha');
     if (!recaptchaToken) {
       msg.style.color = '#b07070';
       msg.textContent = 'Please complete the reCAPTCHA verification.';
+      sfRecaptchaBox.style.outline = '2px solid #b07070';
+      sfRecaptchaBox.style.borderRadius = '4px';
       btn.disabled = false;
       btn.textContent = 'Request My Free Strategy Call →';
       return;
     }
+    sfRecaptchaBox.style.outline = '';
 
     const data = {
       name: document.getElementById('sf-name').value.trim(),
