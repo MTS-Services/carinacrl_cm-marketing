@@ -27,7 +27,7 @@ function buildConsultationEmail({ firstName, lastName, email, practiceName, spec
           <!-- Logo -->
           <tr>
             <td style="background:#ffffff;padding:24px 40px;text-align:center;border-bottom:0.5px solid rgba(154,122,80,0.12);">
-              <img src="${logoUrl}" alt="CM Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
+              <img src="${logoUrl}" alt="CM Strategic Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
             </td>
           </tr>
 
@@ -96,7 +96,7 @@ function buildConsultationEmail({ firstName, lastName, email, practiceName, spec
           <!-- Footer -->
           <tr>
             <td style="background:#f3ebe0;padding:20px 40px;text-align:center;border-top:1px solid rgba(154,122,80,0.16);">
-              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Marketing · Los Angeles · Germany · International</p>
+              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Strategic Marketing · Los Angeles · Germany · International</p>
             </td>
           </tr>
 
@@ -124,7 +124,7 @@ function buildStrategyCallEmail({ name, practiceName, email, phone }) {
           <!-- Logo -->
           <tr>
             <td style="background:#ffffff;padding:24px 40px;text-align:center;border-bottom:0.5px solid rgba(154,122,80,0.12);">
-              <img src="${logoUrl}" alt="CM Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
+              <img src="${logoUrl}" alt="CM Strategic Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
             </td>
           </tr>
 
@@ -187,7 +187,7 @@ function buildStrategyCallEmail({ name, practiceName, email, phone }) {
           <!-- Footer -->
           <tr>
             <td style="background:#f3ebe0;padding:20px 40px;text-align:center;border-top:1px solid rgba(154,122,80,0.16);">
-              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Marketing · Los Angeles · Germany · International</p>
+              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Strategic Marketing · Los Angeles · Germany · International</p>
             </td>
           </tr>
 
@@ -215,7 +215,7 @@ function buildUserConfirmationEmail(name) {
           <!-- Logo -->
           <tr>
             <td style="background:#ffffff;padding:24px 40px;text-align:center;border-bottom:0.5px solid rgba(154,122,80,0.12);">
-              <img src="${logoUrl}" alt="CM Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
+              <img src="${logoUrl}" alt="CM Strategic Marketing" width="140" style="display:block;margin:0 auto;height:auto;" />
             </td>
           </tr>
 
@@ -252,7 +252,7 @@ function buildUserConfirmationEmail(name) {
           <!-- Footer -->
           <tr>
             <td style="background:#f3ebe0;padding:20px 40px;text-align:center;border-top:1px solid rgba(154,122,80,0.16);">
-              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Marketing &middot; Los Angeles &middot; Germany &middot; International</p>
+              <p style="margin:0;font-size:11px;color:#9e8e7c;letter-spacing:0.1em;">CM Strategic Marketing &middot; Los Angeles &middot; Germany &middot; International</p>
             </td>
           </tr>
 
@@ -269,10 +269,10 @@ function buildUserConfirmationEmail(name) {
 async function sendUserConfirmationEmail({ email, name }) {
   const html = buildUserConfirmationEmail(name);
   await transporter.sendMail({
-    from: `"CM Marketing" <${process.env.EMAIL_USER}>`,
+    from: `"CM Strategic Marketing" <${process.env.EMAIL_USER}>`,
     to: email,
     replyTo: process.env.TO_EMAIL,
-    subject: 'Your Request Has Been Submitted Successfully — CM Marketing',
+    subject: 'Your Request Has Been Submitted Successfully — CM Strategic Marketing',
     html,
   });
 }

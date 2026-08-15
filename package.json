@@ -1,7 +1,7 @@
 {
   "name": "cm-marketing-website",
   "version": "1.0.0",
-  "description": "CM Marketing Website Backend",
+  "description": "CM Strategic Marketing Website Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
